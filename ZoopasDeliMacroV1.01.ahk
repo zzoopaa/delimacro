@@ -1,7 +1,7 @@
 ﻿;SETTINGS -----------------------------------------------------------------
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-Version := "1 - InDev"
+Version := "1.01"
 CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 
@@ -15,6 +15,7 @@ boxes := []
 home := box()
 bell := box()
 settingsStr := '11111111111111110'
+settingsStrLen := 18
 invStr := '0,0,0,0'
 KeepAnthony := KeepButter := KeepCentury := KeepChicken := KeepClever := KeepCourt := KeepCrown := KeepDrake := KeepGift := KeepKitchen := KeepMinion := KeepNoble := KeepPantry := KeepRed := KeepWhite := TakeScreenshots := WaitForDespawn := DoShortWaits := 1
 
@@ -63,7 +64,7 @@ ReadSettings(){
 	settingsFile := A_ScriptDir "\ZDMsettings.txt"
 	if (FileExist(settingsFile)){
 		fileList := StrSplit(FileRead(settingsFile), "`n", "`r")
-		if (StrLen(fileList[2])=18){
+		if (StrLen(fileList[2])=settingsStrLen){
 			settingsStr := fileList[2]
 		}
 		invList := StrSplit(fileList[3],",", "`r")
@@ -345,12 +346,12 @@ F6::Reload
 }
 ;PREFERENCES CHANGE HOTKEY CTRL P
 ^p::{
-	inputSettings := InputBox("Enter a string of 1s and 0s, where 1 represents True and 0 represents False. Each digit corresponds to the variable at the same place in the list below, where 'Keep Tall Anthony' is the first, and the 'DoShortWaits' setting is the last. Your string MUST be 18 characters long and should have NO spaces or other seperating characters.`nExample of a valid string:`n10001111001010110`n`nLIST:Tall Anthony, Buttered Greens, Century Cube, Big Chicken, Clever Cube, Court Jester, Crown, Drake Set, Gift Fruit, Kitchen Cube, Minion, Noble Blue Seeds, Pantry Leech Set, Red Bean, White Salamander, Take Screenshots, Wait For Despawn, Do Short Waits`n`nNote: You can verify your settings by pressing CTRL + I after you have finished.", "Zoopa's Deli Macro V" Version, "w600 h300")
+	inputSettings := InputBox("Enter a string of 1s and 0s, where 1 represents True and 0 represents False. Each digit corresponds to the variable at the same place in the list below, where 'Keep Tall Anthony' is the first, and the 'DoShortWaits' setting is the last. Your string MUST be " settingsStrLen " characters long and should have NO spaces or other seperating characters.`nExample of a valid string:`n10001111001010110`n`nLIST:Tall Anthony, Buttered Greens, Century Cube, Big Chicken, Clever Cube, Court Jester, Crown, Drake Set, Gift Fruit, Kitchen Cube, Minion, Noble Blue Seeds, Pantry Leech Set, Red Bean, White Salamander, Take Screenshots, Wait For Despawn, Do Short Waits`n`nNote: You can verify your settings by pressing CTRL + I after you have finished.", "Zoopa's Deli Macro V" Version, "w600 h300")
 	if (inputSettings.result != 'OK' || inputSettings.value = ''){
 		return
 	}
 	newKeepString := inputSettings.value
-	if (StrLen(newKeepString) = 18){
+	if (StrLen(newKeepString) = settingsStrLen){
 		global settingsStr := newKeepString
 		global KeepAnthony := (SubStr(settingsStr,1,1) = "1")
 		global KeepButter := (SubStr(settingsStr,2,1) = "1")
