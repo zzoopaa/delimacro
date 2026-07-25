@@ -1,7 +1,7 @@
 ﻿;SETTINGS -----------------------------------------------------------------
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-Version := "1.02"
+Version := "1.03"
 CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
@@ -307,7 +307,7 @@ F6::Reload
 		UIDisplay := ""
 		return
 	}
-    UIDisplay := Gui("+AlwaysOnTop -Caption +ToolWindow +E0x20")
+    UIDisplay := Gui("-DPIScale +AlwaysOnTop -Caption +ToolWindow +E0x20")
     UIDisplay.BackColor := "000000"
     UIDisplay.Show("x0 y0 w" A_ScreenWidth " h" A_ScreenHeight " NA")
     WinSetTransColor "000000", UIDisplay.Hwnd
