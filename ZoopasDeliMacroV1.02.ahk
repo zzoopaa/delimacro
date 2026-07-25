@@ -1,9 +1,10 @@
 ﻿;SETTINGS -----------------------------------------------------------------
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-Version := "1.01"
+Version := "1.02"
 CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
+DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
 
 ;VARIABLES -----------------------------------------------------------------
 StartTime := A_TickCount
@@ -143,7 +144,7 @@ DropItem(X1, Y1){
 }
 ;IS THE INVENTORY OPEN CHECK FUNCTION
 IsInvOpen(){
-if (ColorListSearch(home.x1,home.y1,home.x2,home.y2,[0x8D807A])||ColorListSearch(home.x1,home.y1,home.x2,home.y2,[0x94C19B])){
+if (ColorListSearch(home.x1,home.y1,home.x2,home.y2,[0x8D807A],1)||ColorListSearch(home.x1,home.y1,home.x2,home.y2,[0x94C19B],1)){
 	return true
 }
 else{
@@ -151,9 +152,9 @@ else{
 }
 }
 ;PIXEL SEARCH LIST FUNCTION
-ColorListSearch(X1,Y1,X2,Y2,ColorList){ ;Only returns true if all colors exist in the specific region
+ColorListSearch(X1,Y1,X2,Y2,ColorList,tolerance := 5){ ;Only returns true if all colors exist in the specific region
 	for color in ColorList{
-		if (PixelSearch(&Px, &Py, X1, Y1, X2, Y2, color, 15)){
+		if (PixelSearch(&Px, &Py, X1, Y1, X2, Y2, color, tolerance)){
 			continue
 		}
 		else{
@@ -198,22 +199,6 @@ DrawBox(gui, x1, y1, x2, y2, label:="") {
 	gui.Add("Text", "x" x1+5 " y" y1+5 " cWhite BackgroundTrans", label)
 }
 
-;SCREENSHOT FUNCTION
-/*CaptureRegion(x1, y1, x2, y2, file := "shot.png") { ;Taken from AI, I don't know how the screenshot stuff works
-    w := x2 - x1
-    h := y2 - y1
-
-    hdcScreen := DllCall("GetDC", "ptr", 0, "ptr")
-    hdcMem := DllCall("CreateCompatibleDC", "ptr", hdcScreen, "ptr")
-    hbm := DllCall("CreateCompatibleBitmap", "ptr", hdcScreen, "int", w, "int", h, "ptr")
-    obm := DllCall("SelectObject", "ptr", hdcMem, "ptr", hbm)
-
-    DllCall("BitBlt"
-        , "ptr", hdcMem, "int", 0, "int", 0, "int", w, "int", h
-        , "ptr", hdcScreen, "int", x1, "int", y1
-        , "uint", 0x00CC0020)
-}*/
-
 ;END FUNCTION DECLARATIONS
 
 ;BEGIN PROGRAM
@@ -223,15 +208,6 @@ if (!home.real){
 	MsgBox("Warning: Your settings are not properly setup. Please use CTRL + U to intiailize all of your coordinates.","Zoopa's Deli Macro V" Version)
 }
 ;HOTKEYS ------------------------------------------------------------------
-;TEMP
-/*^m::{
-	global TakeScreenshots, Counter
-	if (TakeScreenshots)
-	{
-	time := FormatTime(, "HH-mm-ddd-MM-yy")
-	CaptureRegion(invList[1],invList[2],invList[3],invList[4],A_ScriptDir "\Screenshots\ZDM-C" Counter "-DT" time ".png")
-	}
-}*/
 ;TERMINATE HOTKEY F7
 F7::{
 ExitApp
@@ -419,10 +395,10 @@ Loop 30 {
 	}
 }
 Loop {
-	Sleep 1000
-	Click
-	Sleep 1000
-	Click
+	Loop 5 {
+		Sleep 1000
+		Click
+	}
 	Sleep 500
 	Send "q"
 	Sleep 500
