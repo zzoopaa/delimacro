@@ -1,7 +1,7 @@
 ﻿;SETTINGS -----------------------------------------------------------------
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-Version := "1.03"
+Version := "1.04"
 CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
@@ -18,6 +18,7 @@ bell := box()
 settingsStr := '11111111111111110'
 settingsStrLen := 18
 invStr := '0,0,0,0'
+colorTolerance := 7
 KeepAnthony := KeepButter := KeepCentury := KeepChicken := KeepClever := KeepCourt := KeepCrown := KeepDrake := KeepGift := KeepKitchen := KeepMinion := KeepNoble := KeepPantry := KeepRed := KeepWhite := TakeScreenshots := WaitForDespawn := DoShortWaits := 1
 
 ;BOX CLASS -----------------------------------------------------------------
@@ -152,7 +153,7 @@ else{
 }
 }
 ;PIXEL SEARCH LIST FUNCTION
-ColorListSearch(X1,Y1,X2,Y2,ColorList,tolerance := 5){ ;Only returns true if all colors exist in the specific region
+ColorListSearch(X1,Y1,X2,Y2,ColorList,tolerance := colorTolerance){ ;Only returns true if all colors exist in the specific region
 	for color in ColorList{
 		if (PixelSearch(&Px, &Py, X1, Y1, X2, Y2, color, tolerance)){
 			continue
