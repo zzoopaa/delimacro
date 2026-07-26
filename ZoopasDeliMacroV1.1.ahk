@@ -1,7 +1,7 @@
 ﻿;SETTINGS -----------------------------------------------------------------
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-Version := "1.04"
+Version := "1.1"
 CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
@@ -18,7 +18,7 @@ bell := box()
 settingsStr := '11111111111111110'
 settingsStrLen := 18
 invStr := '0,0,0,0'
-colorTolerance := 7
+colorTolerance := 6
 KeepAnthony := KeepButter := KeepCentury := KeepChicken := KeepClever := KeepCourt := KeepCrown := KeepDrake := KeepGift := KeepKitchen := KeepMinion := KeepNoble := KeepPantry := KeepRed := KeepWhite := TakeScreenshots := WaitForDespawn := DoShortWaits := 1
 
 ;BOX CLASS -----------------------------------------------------------------
@@ -165,29 +165,55 @@ ColorListSearch(X1,Y1,X2,Y2,ColorList,tolerance := colorTolerance){ ;Only return
 	return true
 }
 ;ITEM SEARCH FUNCTION
-ItemSearch(MX1, MY1, MX2, MY2){
+ItemSearch(MX1, MY1, MX2, MY2, testMode := false){
 global KeepDrake, KeepAnthony, KeepMinion, KeepCentury, KeepChicken, KeepClever, KeepCourt, KeepCrown, KeepPantry, KeepGift, KeepWhite, KeepButter, KeepRed, KeepNoble
-if ((KeepAnthony && ColorListSearch(MX1,MY1,MX2,MY2,[0xFFFFFF,0x3C3B50,0x1D222E]))
-||(KeepButter && ColorListSearch(MX1,MY1,MX2,MY2,[0xA157C2,0xB6E5A3,0xC69936]))
-||(KeepCentury && ColorListSearch(MX1, MY1, MX2, MY2, [0xDDE26F,0x94AA3F,0x9BAA30]))
-||(KeepChicken && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3D,0xFFFFFF,0xCAAC92]))
-||(KeepClever && ColorListSearch(MX1, MY1, MX2, MY2, [0x9F58BE,0xFFC1FF,0x83A4AB,0x1D1D2A,0x727F4D]))
-||(KeepCourt && ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFD,0x2B2A3A,0x42665A,0x3E4E86]))
-||(KeepCrown && ColorListSearch(MX1, MY1, MX2, MY2, [0xA157C0,0xFFFFA2]))
-||(KeepDrake && ColorListSearch(MX1, MY1, MX2, MY2, [0xA157C0,0xAFC7BF,0x9B3137]))
-||(KeepGift && ColorListSearch(MX1, MY1, MX2, MY2, [0xEDF0EF,0x95C192,0x4076AF,0xBC6E7D]))
-||(KeepKitchen && ColorListSearch(MX1, MY1, MX2, MY2, [0x456889,0x1E2B31,0x1E2321,0x727F4C]))
-||(KeepMinion && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3B,0x477661,0x595650]))
-||(KeepNoble && ColorListSearch(MX1, MY1, MX2, MY2, [0x9B53BB,0x528FD7,0x82B279]))
-||(KeepPantry && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x333F4B,0xFCA6B1])||ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x556481,0x73A192])))
-||(KeepRed && ColorListSearch(MX1, MY1, MX2, MY2, [0xA157C0,0xFF5E31,0xCD4324]))
-||(KeepWhite && ColorListSearch(MX1, MY1, MX2, MY2, [0xE0E56F,0xE7E7D9,0xDEDCCF])))
-{
-	return true
+if ((KeepAnthony || testMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xFFFFFF,0x3F3E52],2)){
+	return 'Tall Anthony'
 }
-else
-{
-return false
+if ((KeepButter || testMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xA157C2,0xB6E5A3,0xC69936])){
+	return 'Buttered Greens'
+}
+if ((KeepCentury || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x595E31,0x99A83B,0x182120])){
+	return 'Century Cube'
+}
+if ((KeepChicken || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3D,0xFFFFFF,0xCAAC92])){
+	return 'Big Chicken'
+}
+if ((KeepClever || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA057BF,0xFFBEFF,0x1D1D2A])){
+	return 'Clever Cube'
+}
+if ((KeepCourt || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFD,0x2B2A3A,0x42665A,0x3E4E86])){
+	return 'Court Jester'
+}
+if ((KeepCrown || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA8B268,0xA157C0], 3)){
+	return 'Crown'
+}
+if ((KeepDrake || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA157C0,0x95363C, 0x676655])){
+	return 'Drake Set'
+}
+if ((KeepGift || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xEDF0EF,0x95C192,0x4076AF,0xBC6E7D])){
+	return 'Gift Fruit'
+}
+if ((KeepKitchen || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x446787,0x1E23C0])){
+	return 'Kitchen Cube'
+}
+if ((KeepMinion || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3B,0x477661,0x595650])){
+	return 'Minion'
+}
+if ((KeepNoble || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x9B53BB,0x528FD7,0x82B279])){
+	return 'Noble Blue Seed'
+}
+if ((KeepPantry || testMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x333F4B,0xFCA6B1])||ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x556481,0x73A192]))){
+	return 'Pantry Leech Set'
+}
+if ((KeepRed || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xE9592F,0xA463C0])){
+	return 'Red Bean'
+}
+if ((KeepWhite || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xD4D9AA,0xC9C6BE], 3)){
+	return 'White Salamander Egg'
+}
+else{
+	return false
 }}
 ;DRAWBOX FUNCTION
 DrawBox(gui, x1, y1, x2, y2, label:="") {
@@ -224,6 +250,10 @@ F6::Reload
 	TimeElapsed := A_TickCount - StartTime
 	MsgBox("Waits Finished: " Counter "`nTime Elapsed:`nSeconds: " Round(TimeElapsed/1000, 1) "`nMinutes: " Round(TimeElapsed/60000, 1) "`nHours: " Round(TimeElapsed/3600000, 1) "`n`nWaits Per Hour: " Round(Counter/(TimeElapsed/3600000), 1),"Zoopa's Deli Macro V" Version)
 	}
+;WEBHOOK TEST
+^;::{
+	MsgBox("Webhook features not added yet","Zoopa's Deli Macro V" Version)
+}
 ;SCREENSHOT MODE HOTKEY CTRL PERIOD
 ^.::{
 	global TakeScreenshots
@@ -238,7 +268,7 @@ F6::Reload
 ;INFO HOTKEY CTRL I
 ^i::{
 	MsgBox("Zoopa's Deli Macro V" Version
-	"`n`nCTRL + B to start`nCTRL + I for info`nCTRL + O for setting explanations`nCTRL + U to setup coordinates`nCTRL + J to draw coordinates`nCTRL + P to change settings`nCTRL + K to display Time Elapsed and Counter`nCTRL + PERIOD (.) to toggle Screenshot Mode`nBACKSLASH (\) to pause script`nF6 to reload script`nF7 to terminate script"
+	"`n`nCTRL + B to start`nCTRL + I for info`nCTRL + O for setting explanations`nCTRL + U to setup coordinates`nCTRL + J to draw coordinates`nCTRL + P to change settings`nCTRL + K to display Time Elapsed and Counter`nCTRL + PERIOD (.) to toggle Screenshot Mode`nCTRL + SEMICOLON (;) to test webhook`nBACKSLASH (\) to pause script`nF6 to reload script`nF7 to terminate script"
 	"`n`n1 = True, 0 = False"
 	"`nKeep Tall Anthony: " KeepAnthony
 	"`nKeep Buttered Greens: " KeepButter 	
@@ -354,7 +384,43 @@ F6::Reload
 		MsgBox('Invalid input length, try again and use 14 characters',"Zoopa's Deli Macro V" Version)
 		return
 	}
+}
+;VISION TEST
+^L::{
+	global boxes, UIDisplay
+    UIDisplay := Gui("-DPIScale +AlwaysOnTop -Caption +ToolWindow +E0x20")
+    UIDisplay.BackColor := "000000"
+    UIDisplay.Show("x0 y0 w" A_ScreenWidth " h" A_ScreenHeight " NA")
+    WinSetTransColor "000000", UIDisplay.Hwnd
+	MsgBox("Mouse over the top left of the test view and press F8","Zoopa's Deli Macro V" Version)
+	KeyWait "F8", "D"
+	KeyWait "F8"
+	MouseGetPos &x, &y
+	firstx := x
+	firsty := y
+	MsgBox("Mouse over the bottom right of the test view and press F8","Zoopa's Deli Macro V" Version)
+	KeyWait "F8", "D"
+	KeyWait "F8"
+	MouseGetPos &x, &y
+	secondx := x
+	secondy := y
+	DrawBox(UIDisplay,firstx,firsty,secondx,secondy,"Eyes")
+	searchResult := 'nothing'
+	 Loop {
+        result := MsgBox("I see " searchResult ". Choose OK to scan. Choose Cancel to exit.","Zoopa's Deli Macro V" Version,"OKCancel")
+		switch result {
+			case "OK":
+				searchResult := ItemSearch(firstx,firsty,secondx,secondy, true)
+				if (!searchResult){
+					searchResult := 'junk'
+				}
+			case "Cancel":
+				UIDisplay.Destroy()
+				UIDisplay := ""
+				return
+		}
 	}
+}
 ;DELI MACRO HOTKEY
 ^B::{
 for box in boxes{
