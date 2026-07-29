@@ -1,7 +1,7 @@
 ﻿;SETTINGS -----------------------------------------------------------------
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-Version := "1.1"
+Version := "1.2"
 CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
@@ -165,56 +165,136 @@ ColorListSearch(X1,Y1,X2,Y2,ColorList,tolerance := colorTolerance){ ;Only return
 	return true
 }
 ;ITEM SEARCH FUNCTION
-ItemSearch(MX1, MY1, MX2, MY2, testMode := false){
-global KeepDrake, KeepAnthony, KeepMinion, KeepCentury, KeepChicken, KeepClever, KeepCourt, KeepCrown, KeepPantry, KeepGift, KeepWhite, KeepButter, KeepRed, KeepNoble
-if ((KeepAnthony || testMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xFFFFFF,0x3F3E52],2)){
-	return 'Tall Anthony'
+ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
+	global KeepDrake, KeepAnthony, KeepMinion, KeepCentury, KeepChicken, KeepClever, KeepCourt, KeepCrown, KeepPantry, KeepGift, KeepWhite, KeepButter, KeepRed, KeepNoble
+	str := ''
+	if ((KeepAnthony || debugMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xFFFFFF,0x3F3E52],2)){
+		if (debugMode){
+			str .= 'Tall Anthony'
+		}
+		else{
+			return 'Tall Anthony'
+		}
+	}
+	if ((KeepButter || debugMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xA157C2,0xB6E5A3,0xC69936])){
+		if (debugMode){
+			str .= 'Buttered Greens'
+		}
+		else{
+			return 'Buttered Greens'
+		}
+	}
+	if ((KeepCentury || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x595E31,0x99A83B,0x182120])){
+		if (debugMode){
+			str .= 'Century Cube'
+		}
+		else{
+			return 'Century Cube'
+		}
+	}
+	if ((KeepChicken || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xAD3F3F,0xFDFDFD,0xCAAC92])){
+		if (debugMode){
+			str .= 'Big Chicken'
+		}
+		else{
+			return 'Big Chicken'
+		}
+	}
+	if ((KeepClever || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA057BF,0xFFBEFF,0x1D1D2A])){
+		if (debugMode){
+			str .= 'Clever Cube'
+		}
+		else{
+			return 'Clever Cube'
+		}
+	}
+	if ((KeepCourt || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFD,0x2B2A3A,0x42665A,0x3E4E86]) || ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFD,0x477067,0x38487C]))){
+		if (debugMode){
+			str .= 'Court Jester Set'
+		}
+		else{
+			return 'Court Jester Set'
+		}
+	}
+	if ((KeepCrown || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xA8B268,0xA157C0], 3) && !(ColorListSearch(MX1, MY1, MX2, MY2, [0xB4E3AB], 3)))){
+		if (debugMode){
+			str .= 'Crown'
+		}
+		else{
+			return 'Crown'
+		}
+	}
+	if ((KeepDrake || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xA157C0,0x95363C, 0x676655], 7) || ColorListSearch(MX1, MY1, MX2, MY2, [0xA76CC1,0x6F282B]))){
+		if (debugMode){
+			str .= 'Drake Set'
+		}
+		else{
+			return 'Drake Set'
+		}
+	}
+	if ((KeepGift || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xEDF0EF,0x95C192,0x4076AF,0xBC6E7D])){
+		if (debugMode){
+			str .= 'Gift Fruit'
+		}
+		else{
+			return 'Gift Fruit'
+		}
+	}
+	if ((KeepKitchen || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x1E2C30,0x192327], 4)){
+		if (debugMode){
+			str .= 'Kitchen Cube'
+		}
+		else{
+			return 'Kitchen Cube'
+		}
+	}
+	if ((KeepMinion || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3B,0x477661,0x595650])){
+		if (debugMode){
+			str .= 'Minion'
+		}
+		else{
+			return 'Minion'
+		}
+	}
+	if ((KeepNoble || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x9B53BB,0x528FD7,0x82B279])){
+		if (debugMode){
+			str .= 'Noble Blue Seed'
+		}
+		else{
+			return 'Noble Blue Seed'
+		}
+	}
+	if ((KeepPantry || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x252945,0x75A095]))){
+		if (debugMode){
+			str .= 'Pantry Leech Head'
+		}
+		else{
+			return 'Pantry Leech Head'
+		}
+	}
+	if ((KeepRed || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xE9592F,0xA463C0])){
+		if (debugMode){
+			str .= 'Red Bean'
+		}
+		else{
+			return 'Read Bean'
+		}
+	}
+	if ((KeepWhite || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xD4D9AA,0xC9C6BE], 3)){
+		if (debugMode){
+			str .= 'White Salamander Egg'
+		}
+		else{
+			return 'White Salamander Egg'
+		}
+	}
+	if (debugMode){
+		return str
+	}
+	else {
+		return false
+	}
 }
-if ((KeepButter || testMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xA157C2,0xB6E5A3,0xC69936])){
-	return 'Buttered Greens'
-}
-if ((KeepCentury || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x595E31,0x99A83B,0x182120])){
-	return 'Century Cube'
-}
-if ((KeepChicken || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3D,0xFFFFFF,0xCAAC92])){
-	return 'Big Chicken'
-}
-if ((KeepClever || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA057BF,0xFFBEFF,0x1D1D2A])){
-	return 'Clever Cube'
-}
-if ((KeepCourt || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFD,0x2B2A3A,0x42665A,0x3E4E86])){
-	return 'Court Jester'
-}
-if ((KeepCrown || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA8B268,0xA157C0], 3)){
-	return 'Crown'
-}
-if ((KeepDrake || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA157C0,0x95363C, 0x676655])){
-	return 'Drake Set'
-}
-if ((KeepGift || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xEDF0EF,0x95C192,0x4076AF,0xBC6E7D])){
-	return 'Gift Fruit'
-}
-if ((KeepKitchen || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x446787,0x1E23C0])){
-	return 'Kitchen Cube'
-}
-if ((KeepMinion || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3B,0x477661,0x595650])){
-	return 'Minion'
-}
-if ((KeepNoble || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x9B53BB,0x528FD7,0x82B279])){
-	return 'Noble Blue Seed'
-}
-if ((KeepPantry || testMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x333F4B,0xFCA6B1])||ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x556481,0x73A192]))){
-	return 'Pantry Leech Set'
-}
-if ((KeepRed || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xE9592F,0xA463C0])){
-	return 'Red Bean'
-}
-if ((KeepWhite || testMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xD4D9AA,0xC9C6BE], 3)){
-	return 'White Salamander Egg'
-}
-else{
-	return false
-}}
 ;DRAWBOX FUNCTION
 DrawBox(gui, x1, y1, x2, y2, label:="") {
     thickness := 2
@@ -405,14 +485,17 @@ F6::Reload
 	secondx := x
 	secondy := y
 	DrawBox(UIDisplay,firstx,firsty,secondx,secondy,"Eyes")
-	searchResult := 'nothing'
-	 Loop {
-        result := MsgBox("I see " searchResult ". Choose OK to scan. Choose Cancel to exit.","Zoopa's Deli Macro V" Version,"OKCancel")
+	Loop {
+		searchResult := ''
+		result := 'OK'
 		switch result {
 			case "OK":
 				searchResult := ItemSearch(firstx,firsty,secondx,secondy, true)
-				if (!searchResult){
-					searchResult := 'junk'
+				if (searchResult = ''){
+					result := MsgBox("I see junk. Choose OK to scan. Choose Cancel to exit.","Zoopa's Deli Macro V" Version,"OKCancel")
+				}
+				else{
+					result := MsgBox("I see " searchResult ". Choose OK to scan. Choose Cancel to exit.","Zoopa's Deli Macro V" Version,"OKCancel")
 				}
 			case "Cancel":
 				UIDisplay.Destroy()
