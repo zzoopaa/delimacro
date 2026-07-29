@@ -10,8 +10,9 @@ DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
 StartTime := A_TickCount
 TimeElapsed := 0
 Counter := 0
-
 UIDisplay := ''
+;webhook := '' UNUSED
+
 boxes := []
 home := box()
 bell := box()
@@ -305,7 +306,15 @@ DrawBox(gui, x1, y1, x2, y2, label:="") {
     gui.Add("Text", "x" (x2-thickness) " y" y1 " w" thickness " h" (y2-y1) " Background" color) ;right
 	gui.Add("Text", "x" x1+5 " y" y1+5 " cWhite BackgroundTrans", label)
 }
-
+;SEND WEBHOOK UNUSED
+/*SendWebhook(message){
+	global webhook
+    json := '{"content":"' message '","allowed_mentions":{"parse":["users"]}}'
+    http := ComObject("WinHttp.WinHttpRequest.5.1")
+    http.Open("POST", webhook, false)
+    http.SetRequestHeader("Content-Type", "application/json")
+    http.Send(json)
+}*/
 ;END FUNCTION DECLARATIONS
 
 ;BEGIN PROGRAM
@@ -348,7 +357,7 @@ F6::Reload
 ;INFO HOTKEY CTRL I
 ^i::{
 	MsgBox("Zoopa's Deli Macro V" Version
-	"`n`nCTRL + B to start`nCTRL + I for info`nCTRL + O for setting explanations`nCTRL + U to setup coordinates`nCTRL + J to draw coordinates`nCTRL + P to change settings`nCTRL + K to display Time Elapsed and Counter`nCTRL + PERIOD (.) to toggle Screenshot Mode`nCTRL + SEMICOLON (;) to test webhook`nBACKSLASH (\) to pause script`nF6 to reload script`nF7 to terminate script"
+	"`n`nCTRL + B to start`nCTRL + I for info`nCTRL + O for setting explanations`nCTRL + U to setup coordinates`nCTRL + J to draw coordinates`nCTRL + P to change settings`nCTRL + K to display Time Elapsed and Counter`nCTRL + PERIOD (.) to toggle Screenshot Mode`nBACKSLASH (\) to pause script`nF6 to reload script`nF7 to terminate script" ;CTRL + SEMICOLON (;) to test webhook`n
 	"`n`n1 = True, 0 = False"
 	"`nKeep Tall Anthony: " KeepAnthony
 	"`nKeep Buttered Greens: " KeepButter 	
