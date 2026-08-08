@@ -1,7 +1,7 @@
 ﻿;SETTINGS -----------------------------------------------------------------
 #Requires AutoHotkey v2.0
 #SingleInstance Force
-Version := "1.2"
+Version := "1.3"
 CoordMode "Mouse", "Screen"
 CoordMode "Pixel", "Screen"
 DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
@@ -10,9 +10,8 @@ DllCall("SetThreadDpiAwarenessContext", "ptr", -4, "ptr")
 StartTime := A_TickCount
 TimeElapsed := 0
 Counter := 0
-UIDisplay := ''
-;webhook := '' UNUSED
 
+UIDisplay := ''
 boxes := []
 home := box()
 bell := box()
@@ -169,9 +168,41 @@ ColorListSearch(X1,Y1,X2,Y2,ColorList,tolerance := colorTolerance){ ;Only return
 ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	global KeepDrake, KeepAnthony, KeepMinion, KeepCentury, KeepChicken, KeepClever, KeepCourt, KeepCrown, KeepPantry, KeepGift, KeepWhite, KeepButter, KeepRed, KeepNoble
 	str := ''
-	if ((KeepAnthony || debugMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xFFFFFF,0x3F3E52],2)){
+	if (ColorListSearch(MX1,MY1,MX2,MY2,[0xD3AB31,0xD4F2D4,0xFEFFFE,0x7DB4E3],8)){
 		if (debugMode){
-			str .= 'Tall Anthony'
+			str .= 'Candy Crumbs | '
+		}
+		else{
+			return false
+		}
+	}
+	if (ColorListSearch(MX1,MY1,MX2,MY2,[0x54AD4D,0x899310,0xA5AE4B])){
+		if (debugMode){
+			str .= 'Greater Dungeon Candy | '
+		}
+		else{
+			return false
+		}
+	}
+	if (ColorListSearch(MX1,MY1,MX2,MY2,[0xFDFEFE,0x355CB4,0x328CF9])){
+		if (debugMode){
+			str .= 'Lesser Dungeon Candy | '
+		}
+		else{
+			return false
+		}
+	}
+	if (ColorListSearch(MX1,MY1,MX2,MY2,[0xA657C2,0x6A4C24,0xF0F0DE,0x532A41])){
+		if (debugMode){
+			str .= 'Rich Man Delight | '
+		}
+		else{
+			return false
+		}
+	}
+	if ((KeepAnthony || debugMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xFFFFFF,0x3F3E52,0x443E50],4) && !(ColorListSearch(MX1,MY1,MX2,MY2,[0x4E7569,0x3D4E86],4)) && !(ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x252945,0x75A095], 4))){
+		if (debugMode){
+			str .= 'Tall Anthony | '
 		}
 		else{
 			return 'Tall Anthony'
@@ -179,7 +210,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepButter || debugMode) && ColorListSearch(MX1,MY1,MX2,MY2,[0xA157C2,0xB6E5A3,0xC69936])){
 		if (debugMode){
-			str .= 'Buttered Greens'
+			str .= 'Buttered Greens | '
 		}
 		else{
 			return 'Buttered Greens'
@@ -187,7 +218,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepCentury || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x595E31,0x99A83B,0x182120])){
 		if (debugMode){
-			str .= 'Century Cube'
+			str .= 'Century Cube | '
 		}
 		else{
 			return 'Century Cube'
@@ -195,7 +226,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepChicken || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xAD3F3F,0xFDFDFD,0xCAAC92])){
 		if (debugMode){
-			str .= 'Big Chicken'
+			str .= 'Big Chicken | '
 		}
 		else{
 			return 'Big Chicken'
@@ -203,7 +234,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepClever || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xA057BF,0xFFBEFF,0x1D1D2A])){
 		if (debugMode){
-			str .= 'Clever Cube'
+			str .= 'Clever Cube | '
 		}
 		else{
 			return 'Clever Cube'
@@ -211,7 +242,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepCourt || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFD,0x2B2A3A,0x42665A,0x3E4E86]) || ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFD,0x477067,0x38487C]))){
 		if (debugMode){
-			str .= 'Court Jester Set'
+			str .= 'Court Jester Set | '
 		}
 		else{
 			return 'Court Jester Set'
@@ -219,7 +250,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepCrown || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xA8B268,0xA157C0], 3) && !(ColorListSearch(MX1, MY1, MX2, MY2, [0xB4E3AB], 3)))){
 		if (debugMode){
-			str .= 'Crown'
+			str .= 'Crown | '
 		}
 		else{
 			return 'Crown'
@@ -227,7 +258,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepDrake || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xA157C0,0x95363C, 0x676655], 7) || ColorListSearch(MX1, MY1, MX2, MY2, [0xA76CC1,0x6F282B]))){
 		if (debugMode){
-			str .= 'Drake Set'
+			str .= 'Drake Set | '
 		}
 		else{
 			return 'Drake Set'
@@ -235,7 +266,7 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepGift || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xEDF0EF,0x95C192,0x4076AF,0xBC6E7D])){
 		if (debugMode){
-			str .= 'Gift Fruit'
+			str .= 'Gift Fruit | '
 		}
 		else{
 			return 'Gift Fruit'
@@ -243,15 +274,15 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepKitchen || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x1E2C30,0x192327], 4)){
 		if (debugMode){
-			str .= 'Kitchen Cube'
+			str .= 'Kitchen Cube | '
 		}
 		else{
 			return 'Kitchen Cube'
 		}
 	}
-	if ((KeepMinion || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3B,0x477661,0x595650])){
+	if ((KeepMinion || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xB13D3B,0x477661,0x595650],8)){
 		if (debugMode){
-			str .= 'Minion'
+			str .= 'Minion | '
 		}
 		else{
 			return 'Minion'
@@ -259,15 +290,15 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepNoble || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0x9B53BB,0x528FD7,0x82B279])){
 		if (debugMode){
-			str .= 'Noble Blue Seed'
+			str .= 'Noble Blue Seed | '
 		}
 		else{
 			return 'Noble Blue Seed'
 		}
 	}
-	if ((KeepPantry || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x252945,0x75A095]))){
+	if ((KeepPantry || debugMode) && (ColorListSearch(MX1, MY1, MX2, MY2, [0xFFFFFF,0x252945,0x75A095])) && !(ColorListSearch(MX1, MY1, MX2, MY2, [0x3D4E86],4))){
 		if (debugMode){
-			str .= 'Pantry Leech Head'
+			str .= 'Pantry Leech Head | '
 		}
 		else{
 			return 'Pantry Leech Head'
@@ -275,15 +306,15 @@ ItemSearch(MX1, MY1, MX2, MY2, debugMode := false){
 	}
 	if ((KeepRed || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xE9592F,0xA463C0])){
 		if (debugMode){
-			str .= 'Red Bean'
+			str .= 'Red Bean | '
 		}
 		else{
 			return 'Read Bean'
 		}
 	}
-	if ((KeepWhite || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xD4D9AA,0xC9C6BE], 3)){
+	if ((KeepWhite || debugMode) && ColorListSearch(MX1, MY1, MX2, MY2, [0xD4D2C8,0xE0E670,0xE7E6D8])){
 		if (debugMode){
-			str .= 'White Salamander Egg'
+			str .= 'White Salamander Egg | '
 		}
 		else{
 			return 'White Salamander Egg'
@@ -306,15 +337,7 @@ DrawBox(gui, x1, y1, x2, y2, label:="") {
     gui.Add("Text", "x" (x2-thickness) " y" y1 " w" thickness " h" (y2-y1) " Background" color) ;right
 	gui.Add("Text", "x" x1+5 " y" y1+5 " cWhite BackgroundTrans", label)
 }
-;SEND WEBHOOK UNUSED
-/*SendWebhook(message){
-	global webhook
-    json := '{"content":"' message '","allowed_mentions":{"parse":["users"]}}'
-    http := ComObject("WinHttp.WinHttpRequest.5.1")
-    http.Open("POST", webhook, false)
-    http.SetRequestHeader("Content-Type", "application/json")
-    http.Send(json)
-}*/
+
 ;END FUNCTION DECLARATIONS
 
 ;BEGIN PROGRAM
@@ -357,7 +380,7 @@ F6::Reload
 ;INFO HOTKEY CTRL I
 ^i::{
 	MsgBox("Zoopa's Deli Macro V" Version
-	"`n`nCTRL + B to start`nCTRL + I for info`nCTRL + O for setting explanations`nCTRL + U to setup coordinates`nCTRL + J to draw coordinates`nCTRL + P to change settings`nCTRL + K to display Time Elapsed and Counter`nCTRL + PERIOD (.) to toggle Screenshot Mode`nBACKSLASH (\) to pause script`nF6 to reload script`nF7 to terminate script" ;CTRL + SEMICOLON (;) to test webhook`n
+	"`n`nCTRL + B to start`nCTRL + I for info`nCTRL + O for setting explanations`nCTRL + U to setup coordinates`nCTRL + J to draw coordinates`nCTRL + P to change settings`nCTRL + K to display Time Elapsed and Counter`nCTRL + PERIOD (.) to toggle Screenshot Mode`nCTRL + SEMICOLON (;) to test webhook`nBACKSLASH (\) to pause script`nF6 to reload script`nF7 to terminate script"
 	"`n`n1 = True, 0 = False"
 	"`nKeep Tall Anthony: " KeepAnthony
 	"`nKeep Buttered Greens: " KeepButter 	
